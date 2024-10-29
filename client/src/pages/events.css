@@ -1,0 +1,79 @@
+.event_card {
+  padding: 1%;
+  position: relative;
+  margin: 20px;
+  align-content: center;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  vertical-align: middle;
+  width: 500px;
+ 
+
+ 
+}
+
+/* .event_grid: {
+  display: 'flex';
+  flexdirection: 'column';
+  flexwrap: 'wrap';
+  justifycontent: 'center';
+  gap: 2;
+  max-width: '70%';
+} */
+
+
+
+.card_img {
+  height: 140px;
+  min-width: 400px
+  object-fit: 'cover';
+ }
+
+/* .card_text h6{
+  font-weight: 600;
+  font-size: 18;
+  margin-top: 2;
+  margin-bottom: 1;
+}
+.card_text body
+{
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+} */
+
+
+
+
+  
+ 
+  
+  /* spacing={{ xs: 2, md: 3 }} columns={{ xs: 2, sm: 3, md: 4 }}>
+    {/* <Grid2 sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', p: 2 }}> */} */
+
+.likeButton: {
+  position: 'absolute';
+  top: 8;
+  right: 8;
+}
+
+.learnMore: {
+  mt: 2;
+  alignself: 'flex-end';
+}
+
+.modalBox: {
+  position: 'absolute';
+  top: '50%';
+  left: '50%';
+  transform: 'translate(-50%, -50%)';
+  width: 400;
+  bgcolor: 'background.paper';
+  boxshadow: 24;
+  p: 4;
+  borderradius: 2;
+}

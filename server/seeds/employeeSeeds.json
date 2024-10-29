@@ -1,0 +1,66 @@
+[
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "address": "123 Main St",
+    "phoneNumber": "555-555-5551",
+    "email": "johndoe@example.com",
+    "position": "Software Engineer",
+    "isActive": true
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "address": "123 Main St",
+    "phoneNumber": "555-555-5554",
+    "email": "janedoe@example.com",
+    "position": "Software Engineer",
+    "isActive": true
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "address": "456 Elm St",
+    "phoneNumber": "555-555-5552",
+    "email": "janesmith@example.com",
+    "position": "Product Manager",
+    "isActive": true
+  },
+  {
+    "firstName": "Emily",
+    "lastName": "Johnson",
+    "address": "789 Maple St",
+    "phoneNumber": "555-555-5553",
+    "email": "emilyjohnson@example.com",
+    "position": "UX Designer",
+    "isActive": true
+  },
+
+  {
+    "firstName": "Chris",
+    "lastName": "Smith",
+    "address": "456 Pecan St",
+    "phoneNumber": "555-555-5555",
+    "email": "chris@example.com",
+    "position": "Product Manager",
+    "isActive": true
+  },
+  {
+    "firstName": "Susana",
+    "lastName": "Doe",
+    "address": "789 Maple St",
+    "phoneNumber": "555-555-5556",
+    "email": "susana@example.com",
+    "position": "Frontend Developer",
+    "isActive": true
+  },
+  {
+    "firstName": "Martha",
+    "lastName": "Doe",
+    "address": "3001 Robinhood St",
+    "phoneNumber": "555-555-5557",
+    "email": "martha@example.com",
+    "position": "UX Designer",
+    "isActive": true
+  }
+]
