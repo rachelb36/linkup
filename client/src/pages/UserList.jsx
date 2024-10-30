@@ -15,9 +15,6 @@ import {
 } from '@mui/material';
 import {
   Edit,
-  Delete,
-  KeyboardArrowDown,
-  KeyboardArrowUp,
 } from '@mui/icons-material';
 import { GET_ALL_USERS } from '../utils/queries';
 // import { UPDATE_USER } from '../utils/mutations';

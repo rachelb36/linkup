@@ -10,10 +10,8 @@ const SignUp = () => {
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
-    address: '',
     city: '',
     state: '',
-    zip: '',
     phoneNumber: '',
     occupation: '',
     email: '',
@@ -203,4 +201,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-

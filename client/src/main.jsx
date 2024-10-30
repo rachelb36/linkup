@@ -1,15 +1,17 @@
-import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
 import React from 'react';
-import './index.css';
 import App from './App';
+import Home from './pages/Home';
 import ErrorPage from './pages/ErrorPage';
-import Login from './components/Login';
 import SignUp from './pages/SignUp';
 import Events from './pages/Events';
 import AddEvent from './pages/AddEvent';
 import EditEvent from './pages/EditEvent';
 import AdminPage from './pages/AdminPage';
+import './index.css';
+
+// Create a BrowserRouter instance
 
 const router = createBrowserRouter([
   {
@@ -18,14 +20,13 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />, // Default error page
     children: [
       {
-        index: true, // Default path "/"
-        element: <Login />,
+        index: true,  
+        element: <Home />,
       },
       {
         path: 'admin',
         element: <AdminPage />,
       },
-  
       {
         path: 'addevent',
         element: <AddEvent />,
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
         path: 'signup',
         element: <SignUp />,
       },
+      {
+        path: '*', // Catch-all route for undefined paths
+        element: <ErrorPage />,
+      },
     ],
   },
 ]);
@@ -50,4 +55,3 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 );
-

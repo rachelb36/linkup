@@ -9,10 +9,8 @@ export const GET_ALL_USERS = gql`
       isAdmin
       firstName
       lastName
-      address
       city
       state
-      zip
       phoneNumber
       occupation
     }
@@ -25,13 +23,10 @@ export const GET_ME = gql`
     me {
       _id
       email
-      isAdmin
       firstName
       lastName
-      address
       city
       state
-      zip
       phoneNumber
       occupation
     }
@@ -47,8 +42,6 @@ export const GET_ALL_EVENTS = gql`
       name
       city
       state
-      address
-      zip
       time
       date
       image
@@ -65,23 +58,9 @@ export const GET_EVENT = gql`
       name
       city
       state
-      address
-      zip
       time
       date
       image
     }
   }
 `;
-
-// export const RSVP_TO_EVENT = gql`
-//   mutation rsvpToEvent($eventId: ID!, $status: String!) {
-//     rsvpToEvent(eventId: $eventId, status: $status) {
-//       _id
-//       attendees {
-//         userId
-//         status
-//       }
-//     }
-//   }
-// `;

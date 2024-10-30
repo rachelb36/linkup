@@ -3,53 +3,61 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   scalar Date
 
-  type User {
-    _id: ID!
-    email: String!
-    isAdmin: Boolean!
-  }
-
+  # User type definition
   type User {
     _id: ID!
     firstName: String!
     lastName: String!
-    address: String!
     city: String!
     state: String!
-    zip: String!
     phoneNumber: String!
     email: String!
     occupation: String!
     isAdmin: Boolean!
   }
 
-  input UserInfo {
+  # Define UserInput for user-related mutations
+  input UserInput {
     firstName: String!
     lastName: String!
-    address: String!
-    phoneNumber: String!
+    city: String
+    state: String
+    phoneNumber: String
     email: String!
-    occupation: String!
+    occupation: String
+    password: String!
   }
 
+  # Event type definition
   type Event {
     id: ID!
     description: String!
     name: String!
     city: String
     state: String
-    address: String
-    zip: String
     time: String!
     date: Date!
     image: String
   }
 
+  # EventInput input type for event mutations
+  input EventInput {
+    name: String!
+    description: String!
+    city: String
+    state: String
+    date: Date!
+    time: String!
+    image: String
+  }
+
+  # Auth type for authentication responses
   type Auth {
     token: String!
     user: User!
   }
 
+  # Queries
   type Query {
     me: User
     users: [User]
@@ -57,38 +65,12 @@ const typeDefs = gql`
     event(id: ID!): Event
   }
 
-  input EventInput {
-    name: String!
-    date: Date!
-    description: String!
-    image: String
-  }
-
-  input UserInput {
-    firstName: String
-    lastName: String
-    address: String
-    city: String
-    state: String
-    zip: String
-    phoneNumber: String
-    email: String
-    occupation: String
-    photo: String
-    password: String
-    isAdmin: Boolean
-  }
-
+  # Mutations
   type Mutation {
-    signup(userInput: UserInput): Auth
     login(email: String!, password: String!): Auth
-    addUser(user: UserInfo!): User
-    updateUser(
-      userId: ID!
-      firstName: String
-      lastName: String
-      occupation: String
-    ): User
+    signup(userInput: UserInput!): Auth
+    addUser(user: UserInput!): User
+    updateUser(userId: ID!, input: UserInput!): User
     addEvent(input: EventInput!): Event
     updateEvent(id: ID!, input: EventInput!): Event
     deleteEvent(id: ID!): Boolean

@@ -6,17 +6,9 @@ export const LOGIN = gql`
     login(email: $email, password: $password) {
       token
       user {
-        _id
         email
-        isAdmin
         firstName
-        lastName
-        address
-        city
-        state
-        zip
-        phoneNumber
-        occupation
+        isAdmin
       }
     }
   }
@@ -24,19 +16,16 @@ export const LOGIN = gql`
 
 // Define the SIGNUP mutation
 export const SIGNUP = gql`
-  mutation Signup($userInput: UserInput) {
+  mutation Signup($userInput: UserInput!) {
     signup(userInput: $userInput) {
       token
       user {
         _id
         email
-        isAdmin
         firstName
         lastName
-        address
         city
         state
-        zip
         phoneNumber
         occupation
       }
@@ -44,6 +33,41 @@ export const SIGNUP = gql`
   }
 `;
 
+// Define the ADD_USER mutation
+export const ADD_USER = gql`
+  mutation Mutation($user: UserInfo!) {
+    addUser(user: $user) {
+      _id
+      email
+      isAdmin
+      firstName
+      lastName
+      city
+      state
+      phoneNumber
+      occupation
+    }
+  }
+`;
+
+// Define the UPDATE_USER mutation
+export const UPDATE_USER = gql`
+  mutation Mutation($userId: ID!, $input: UserInfo!) {
+    updateUser(userId: $userId, input: $input) {
+      _id
+      email
+      isAdmin
+      firstName
+      lastName
+      city
+      state
+      phoneNumber
+      occupation
+    }
+  }
+`;
+
+// Define the ADD_EVENT mutation
 export const ADD_EVENT = gql`
   mutation AddEvent($input: EventInput!) {
     addEvent(input: $input) {
@@ -52,8 +76,6 @@ export const ADD_EVENT = gql`
       name
       city
       state
-      address
-      zip
       time
       date
       image
@@ -61,6 +83,7 @@ export const ADD_EVENT = gql`
   }
 `;
 
+// Define the UPDATE_EVENT mutation
 export const UPDATE_EVENT = gql`
   mutation Mutation($updateEventId: ID!, $input: EventInput!) {
     updateEvent(id: $updateEventId, input: $input) {
@@ -69,8 +92,6 @@ export const UPDATE_EVENT = gql`
       name
       city
       state
-      address
-      zip
       time
       date
       image
@@ -78,6 +99,14 @@ export const UPDATE_EVENT = gql`
   }
 `;
 
+// Define the DELETE_EVENT mutation
+export const DELETE_EVENT = gql`
+  mutation DeleteEvent($id: ID!) {
+    deleteEvent(id: $id)
+  }
+`;
+
+// Define the ADD_USER_TO_EVENT mutation
 export const ADD_USER_TO_EVENT = gql`
   mutation AddUserToEvent($eventId: ID!) {
     addUserToEvent(eventId: $eventId) {
@@ -86,8 +115,6 @@ export const ADD_USER_TO_EVENT = gql`
       name
       city
       state
-      address
-      zip
       time
       date
       image
@@ -95,8 +122,7 @@ export const ADD_USER_TO_EVENT = gql`
   }
 `;
 
-
-
+// Define the ADD_TO_USER_LIKES mutation
 export const ADD_TO_USER_LIKES = gql`
   mutation AddToUserLikes($eventId: ID!) {
     addToUserLikes(eventId: $eventId) {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 import {
   Card,
   CardMedia,
@@ -21,6 +22,8 @@ import { ADD_TO_USER_LIKES } from '../utils/mutations';
 import './events.css';
 
 const Events = () => {
+  const location = useLocation();
+  const firstName = location.state?.firstName || '';
   const { loading, data } = useQuery(GET_ALL_EVENTS);
   const [addToUserLikes] = useMutation(ADD_TO_USER_LIKES);
   const [favorites, setFavorites] = useState([]);
@@ -55,8 +58,9 @@ const Events = () => {
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom align="center">
-        Events
+        Hello {firstName}, here are the upcoming events!
       </Typography>
+     
       <Button 
         variant="contained" 
         color="primary" 

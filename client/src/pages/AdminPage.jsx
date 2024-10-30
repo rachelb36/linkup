@@ -3,6 +3,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_ALL_EVENTS, GET_ALL_USERS } from '../utils/queries';
 import { UPDATE_EVENT } from '../utils/mutations';
 import AddEvent from './AddEvent';
+import { useLocation } from 'react-router-dom';
+
 import {
   Card,
   CardContent,
@@ -23,6 +25,8 @@ import Auth from '../utils/auth';
 
 const AdminPage = () => {
   const { loading, error, data, refetch } = useQuery(GET_ALL_EVENTS);
+  const location = useLocation();
+  const firstName = location.state?.firstName;
   const {
     loading: usersLoading,
     data: usersData,
@@ -55,8 +59,8 @@ const AdminPage = () => {
     try {
       await updateEvent({ variables: { updateEventId: eventId, input: editData } });
       setMessage('Changes saved!');
-      refetch(); // Refetch the events to get the latest data
-      setIsEditing(null); // Close edit mode
+      refetch(); 
+      setIsEditing(null);
     } catch (err) {
       console.error(err);
       setMessage('Error saving changes.');
@@ -74,6 +78,10 @@ const AdminPage = () => {
   return (
     <Container>
       <Box display="flex" justifyContent="flex-end" gap={2} mt={4} mb={4}>
+      <Typography variant="h4">
+        Hello {firstName}, welcome to the Admin Page!
+      </Typography>
+      {/* Other AdminPage content */}
         <Button
           variant="contained"
           color="primary"

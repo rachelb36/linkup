@@ -1,25 +1,8 @@
 const { User, Event } = require('../models');
 const { signToken } = require('../utils/auth');
-const { AuthenticationError, GraphQLScalarType } = require('graphql');
-const { Kind } = require('graphql/language');
+const { AuthenticationError } = require('graphql');
 
 const resolvers = {
-  Date: new GraphQLScalarType({
-    name: 'Date',
-    parseValue(value) {
-      return new Date(value);
-    },
-    serialize(value) {
-      return value.toISOString();
-    },
-    parseLiteral(ast) {
-      if (ast.kind === Kind.INT) {
-        return parseInt(ast.value, 10);
-      }
-      return null;
-    },
-  }),
-
   Query: {
     me: async (_, __, context) => {
       if (context.user) {
@@ -32,9 +15,7 @@ const resolvers = {
       if (context.user && context.user.isAdmin) {
         return await User.find({});
       }
-      throw new AuthenticationError(
-        'User not authenticated or lacks permissions'
-      );
+      throw new AuthenticationError('User not authenticated or lacks permissions');
     },
 
     events: async () => {
@@ -80,18 +61,26 @@ const resolvers = {
       throw new AuthenticationError('User not authenticated');
     },
 
-    addEvent: async (_, { input }) => {
-      const newEvent = await Event.create(input);
-      return newEvent;
+    addEvent: async (_, { input }, context) => {
+      if (context.user && context.user.isAdmin) {
+        return await Event.create(input);
+      }
+      throw new AuthenticationError('User not authorized to create events');
     },
 
-    updateEvent: async (_, { id, input }) => {
-      return await Event.findByIdAndUpdate(id, input, { new: true });
+    updateEvent: async (_, { id, input }, context) => {
+      if (context.user && context.user.isAdmin) {
+        return await Event.findByIdAndUpdate(id, input, { new: true });
+      }
+      throw new AuthenticationError('User not authorized to update events');
     },
 
-    deleteEvent: async (_, { id }) => {
-      const event = await Event.findByIdAndDelete(id);
-      return !!event;
+    deleteEvent: async (_, { id }, context) => {
+      if (context.user && context.user.isAdmin) {
+        const event = await Event.findByIdAndDelete(id);
+        return !!event;
+      }
+      throw new AuthenticationError('User not authorized to delete events');
     },
 
     addUserToEvent: async (_, { eventId }, context) => {
@@ -100,7 +89,7 @@ const resolvers = {
           eventId,
           { $addToSet: { users: context.user._id } },
           { new: true }
-        );   
+        );
       }
       throw new AuthenticationError('User not authenticated');
     },
@@ -124,4 +113,3 @@ const resolvers = {
 };
 
 module.exports = resolvers;
-
