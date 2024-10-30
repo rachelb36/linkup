@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { UPDATE_EVENT } from '../utils/mutations'; 
-import { GET_ALL_EVENTS } from '../utils/queries';
+import { GET_ALL_EVENTS } from '../utils/queries';// Assuming UPDATE_EVENT and GET_EVENT are defined
 
 const EditEvent = ({ eventId }) => {
   const { loading, data } = useQuery(GET_ALL_EVENTS, {

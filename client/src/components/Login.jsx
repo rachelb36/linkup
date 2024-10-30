@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
 import '../index.css';
 
 const Login = () => {
@@ -13,6 +14,7 @@ const Login = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
     setFormState({
       ...formState,
       [name]: value,
@@ -27,18 +29,13 @@ const Login = () => {
       });
 
       Auth.login(data.login.token);
-
-      // Check if the user is an admin
-      if (data.login.user.isAdmin) {
-        navigate('/admin');
-      } else {
-        navigate('/events');
-      }
+      navigate('/events');
+      // handleClose(); // Close the modal after a successful login
     } catch (e) {
       console.error(e);
     }
 
-    // Clear form values
+    // clear form values
     setFormState({
       email: '',
       password: '',
@@ -82,6 +79,7 @@ const Login = () => {
           Submit
         </Button>
       </form>
+      <h2>sign in successful</h2>
       {error && (
         <Typography color='error' align='center' mt={2}>
           {error.message}
@@ -96,7 +94,6 @@ const Login = () => {
 };
 
 export default Login;
-
 
 
 

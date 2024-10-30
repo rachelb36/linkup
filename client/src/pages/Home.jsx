@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 const Home = () => {
   return (
     <Box>
-      <Login/>
+      <Login />
     </Box>
   );
 };

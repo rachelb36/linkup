@@ -102,23 +102,26 @@ const resolvers = {
           { new: true }
         );   
       }
-      throw AuthenticationError;
+      throw new AuthenticationError('User not authenticated');
     },
+    
     addToUserLikes: async (_, { eventId }, context) => {
       if (context.user) {
         try {
-        return await User.findByIdAndUpdate(
-          context.user._id,
-          { $addToSet: { likedEvents: eventId } },
-          { new: true }
-        );
-      } catch (err) {
-        console.log(err);
+          return await User.findByIdAndUpdate(
+            context.user._id,
+            { $addToSet: { likedEvents: eventId } },
+            { new: true }
+          );
+        } catch (err) {
+          console.log(err);
+          throw new Error('Failed to add to user likes');
+        }
       }
-      throw AuthenticationError;
-    } 
-  } 
-}
+      throw new AuthenticationError('User not authenticated');
+    },
+  },
 };
 
 module.exports = resolvers;
+

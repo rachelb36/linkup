@@ -1,65 +1,39 @@
 import { Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import auth from '../utils/auth';
 
-const Navbar = ({ isLoggedIn, onLogout }) => {
+const Navbar = ({ onLogout }) => {
   const navigate = useNavigate();
 
+  // Check if the user is logged in
+  const isLoggedIn = auth.loggedIn();
+  
+  // Handle logout
   const handleLogout = () => {
     auth.logout();
-    handleClose();
-    navigate('/login');
+    onLogout(); // Call any parent component's logout handler if needed
+    navigate('/'); // Redirect to home after logout
   };
 
-  // Get user profile from the token to determine if the user is an admin
-  const userProfile = auth.loggedIn() ? auth.getProfile() : null;
-  const isAdmin = userProfile?.isAdmin;
+  // Handle login button click - redirect user based on role
+  const handleLoginRedirect = () => {
+    const user = auth.getProfile();
+    if (user && user.isAdmin) {
+      navigate('/admin');
+    } else {
+      navigate('/events');
+    }
+  };
 
   return (
     <Box className='navbar'>
-      <Link to='/events' style={{ textDecoration: 'none' }}>
-        <Button
-          margin='10px'
-          variant='contained'
-          component={Link} 
-          to={auth.userRole === 'admin' ? '/admin' : '/events'}
-          style={{ backgroundColor: '#3ca7c2', color: '#fff' }}
-        >
-          Dashboard
-        </Button>
-      </Link>
-
-      {/* Admin-specific buttons */}
-      {isAdmin && (
-        <>
-          <Link to='/addevent' style={{ textDecoration: 'none' }}>
-            <Button
-              margin='10px'
-              variant='contained'
-              style={{ backgroundColor: '#3ca7c2', color: '#fff' }}
-            >
-              Add Event
-            </Button>
-          </Link>
-          <Link to='/editevent' style={{ textDecoration: 'none' }}>
-            <Button
-              margin='10px'
-              variant='contained'
-              style={{ backgroundColor: '#3ca7c2', color: '#fff' }}
-            >
-              Edit Event
-            </Button>
-          </Link>
-        </>
-      )}
-
-      {!auth.loggedIn() ? (
+      {!isLoggedIn ? (
         <Link to='/login' style={{ textDecoration: 'none' }}>
           <Button
             margin='10px'
             variant='contained'
             style={{ backgroundColor: '#f57369', color: '#fff' }}
+            onClick={handleLoginRedirect}
           >
             Log In
           </Button>
@@ -79,61 +53,3 @@ const Navbar = ({ isLoggedIn, onLogout }) => {
 };
 
 export default Navbar;
-
-
-
-
-// import { Box, Button } from '@mui/material';
-// import { useNavigate } from 'react-router-dom';
-// import { Link } from 'react-router-dom';
-// import auth from '../utils/auth';
-
-// const Navbar = ({ isLoggedIn, onLogout }) => {
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     // Clear the user's session (e.g., remove token)
-//     localStorage.removeItem('token');
-//     localStorage.removeItem('role');
-//     onLogout();
-//     navigate('/');
-//   };
-
-//   return (
-//     <Box className='navbar'>
-//       {/* Use Link to wrap the Button component for navigation */}
-//       <Link to='/events' style={{ textDecoration: 'none' }}>
-//         <Button
-//           margin='10px'
-//           variant='contained'
-//           style={{ backgroundColor: '#3ca7c2', color: '#fff' }}
-//         >
-//           Dashboard
-//         </Button>
-//       </Link>
-
-//       {!auth.loggedIn() ? (
-//         <Link to='/login' style={{ textDecoration: 'none' }}>
-//           <Button
-//             margin='10px'
-//             variant='contained'
-//             style={{ backgroundColor: '#f57369', color: '#fff' }}
-//           >
-//             Log In
-//           </Button>
-//         </Link>
-//       ) : (
-//         <Button
-//           margin='10px'
-//           variant='contained'
-//           style={{ backgroundColor: '#3ca7c2', color: '#fff' }}
-//           onClick={handleLogout}
-//         >
-//           Log Out
-//         </Button>
-//       )}
-//     </Box>
-//   );
-// };
-
-// export default Navbar;

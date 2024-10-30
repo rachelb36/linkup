@@ -8,8 +8,8 @@ const Header = () => {
       {/* Direct reference to logo in the public folder */}
       <img
         className='logo'
-        src='/teamlink.png'
-        alt='TeamLink'
+        src='/linkup.png'
+        alt='LinkUp logo'
         onClick={() => (window.location.href = '/Home')}
         style={{ height: '75px', cursor: 'pointer' }}
       />

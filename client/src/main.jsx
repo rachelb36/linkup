@@ -1,17 +1,15 @@
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.css';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import App from './App.jsx';
-import ErrorPage from './pages/ErrorPage.jsx';
-import Home from './pages/Home.jsx';
-import Login from './components/Login.jsx';
-import SignUp from './pages/SignUp.jsx';
-import Events from './pages/Events.jsx';
-import AddEvent from './pages/AddEvent.jsx';
-import EditEvent from './pages/EditEvent.jsx';
-import AdminEvents from './pages/AdminPage.jsx';
+import './index.css';
+import App from './App';
+import ErrorPage from './pages/ErrorPage';
+import Login from './components/Login';
+import SignUp from './pages/SignUp';
+import Events from './pages/Events';
+import AddEvent from './pages/AddEvent';
+import EditEvent from './pages/EditEvent';
+import AdminPage from './pages/AdminPage';
 
 const router = createBrowserRouter([
   {
@@ -19,16 +17,31 @@ const router = createBrowserRouter([
     element: <App />, // App component will wrap all other pages
     errorElement: <ErrorPage />, // Default error page
     children: [
-      { index: true, element: <Home /> },
-      { path: 'login', element: <Login /> },
-      { path: 'signup', element: <SignUp /> },
+      {
+        index: true, // Default path "/"
+        element: <Login />,
+      },
       {
         path: 'admin',
-        element: <AdminEvents />, 
-          { index: true, element: <AdminEvents /> },
-
-      // All users can access these routes
-      { path: 'events', element: <Events /> },
+        element: <AdminPage />,
+      },
+  
+      {
+        path: 'addevent',
+        element: <AddEvent />,
+      },
+      {
+        path: 'editevent',
+        element: <EditEvent />,
+      },
+      {
+        path: 'events',
+        element: <Events />,
+      },
+      {
+        path: 'signup',
+        element: <SignUp />,
+      },
     ],
   },
 ]);
@@ -37,3 +50,4 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 );
+
