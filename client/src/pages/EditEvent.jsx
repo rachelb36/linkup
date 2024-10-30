@@ -15,6 +15,8 @@ const EditEvent = ({ eventId }) => {
     name: '',
     description: '',
     date: '',
+    city: '',  
+    state: '',  
     image: '',
   });
 

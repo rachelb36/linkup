@@ -1,17 +1,21 @@
+import React from 'react';
 import { useRouteError } from 'react-router-dom';
-import { Box } from '@mui/system';
 
-export default function ErrorPage() {
+const ErrorPage = () => {
   const error = useRouteError();
-  console.error(error);
+
+  // Safely access properties, providing fallback values if necessary
+  const status = error?.status || 'Unknown Error';
+  const statusText = error?.statusText || 'An unexpected error occurred';
+  const message = error?.message || 'Something went wrong.';
 
   return (
-    <Box id='error-page'>
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
-    </Box>
+    <div>
+      <h1>{status}</h1>
+      <h2>{statusText}</h2>
+      <p>{message}</p>
+    </div>
   );
-}
+};
+
+export default ErrorPage;

@@ -4,6 +4,8 @@ import { TextField, Button, Box, Typography } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { SIGNUP } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../index.css';
 
 const SignUp = () => {
@@ -16,7 +18,6 @@ const SignUp = () => {
     occupation: '',
     email: '',
     password: '',
-    // confirmPassword: '',
   });
   const [passwordError, setPasswordError] = useState('');
   const [signup, { error, data }] = useMutation(SIGNUP);
@@ -28,18 +29,14 @@ const SignUp = () => {
       ...formState,
       [name]: value,
     });
+    toast.info(`${name.charAt(0).toUpperCase() + name.slice(1)} updated to: ${value}`);
   };
 
   // Form submission handler
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // if (formState.password !== formState.confirmPassword) {
-    //   setPasswordError('Passwords do not match.');
-    //   return;
-    // }
-
-    setPasswordError(''); // Clear password error if passwords match
+    setPasswordError(''); // Clear any password error
 
     try {
       const { data } = await signup({
@@ -50,16 +47,19 @@ const SignUp = () => {
 
       if (data?.signup?.token) {
         Auth.login(data.signup.token);
+        toast.success('Signup successful!');
       } else {
         console.error('Token missing in mutation response');
       }
     } catch (e) {
       console.error('Error during form submission:', e);
+      toast.error('Error during form submission.');
     }
   };
 
   return (
     <Box className='login-box'>
+      <ToastContainer position='top-center' autoClose={2000} hideProgressBar />
       <Typography variant='h5' align='center' mb={2}>
         Sign Up
       </Typography>
@@ -90,15 +90,6 @@ const SignUp = () => {
             required
           />
           <TextField
-            label='Address'
-            name='address'
-            type='text'
-            value={formState.address}
-            onChange={handleChange}
-            fullWidth
-            margin='normal'
-          />
-          <TextField
             label='City'
             name='city'
             type='text'
@@ -112,15 +103,6 @@ const SignUp = () => {
             name='state'
             type='text'
             value={formState.state}
-            onChange={handleChange}
-            fullWidth
-            margin='normal'
-          />
-          <TextField
-            label='Zip Code'
-            name='zip'
-            type='text'
-            value={formState.zip}
             onChange={handleChange}
             fullWidth
             margin='normal'
@@ -165,16 +147,6 @@ const SignUp = () => {
             margin='normal'
             required
           />
-          {/* <TextField
-            label='Confirm Password'
-            name='confirmPassword'
-            type='password'
-            value={formState.confirmPassword}
-            onChange={handleChange}
-            fullWidth
-            margin='normal'
-            required
-          /> */}
           {passwordError && (
             <Typography color='error' mt={1}>
               {passwordError}
@@ -191,11 +163,8 @@ const SignUp = () => {
           </Button>
         </form>
       )}
-      {error && (
-        <Typography color='error' mt={2}>
-          {error.message}
-        </Typography>
-      )}
+      {/* Display error toast if mutation error exists */}
+      {error && toast.error(error.message)}
     </Box>
   );
 };

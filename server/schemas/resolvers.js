@@ -1,6 +1,7 @@
+
+const { signToken } = require('../utils/auth');
 const { User, Event } = require('../models');
 const { signToken } = require('../utils/auth');
-const { AuthenticationError } = require('graphql');
 
 const resolvers = {
   Query: {
@@ -10,6 +11,7 @@ const resolvers = {
       }
       throw new AuthenticationError('User not authenticated');
     },
+
 
     users: async (_, __, context) => {
       if (context.user && context.user.isAdmin) {
@@ -30,22 +32,24 @@ const resolvers = {
   Mutation: {
     login: async (_, { email, password }) => {
       const user = await User.findOne({ email });
+      try {
       if (!user) {
         throw new AuthenticationError('No user found with this email');
       }
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect password');
+        throw new AuthenticationError('toastify error');
+        if (!user) {
+          throw new AuthenticationError('toastify error');
+        }
       }
-      const token = signToken(user);
-      return { token, user };
-    },
 
     signup: async (_, { userInput }) => {
       const user = await User.create({ ...userInput });
       const token = signToken(user);
       return { token, user };
     },
+
 
     addUser: async (_, { user }, context) => {
       if (context.user) {
@@ -72,7 +76,7 @@ const resolvers = {
       if (context.user && context.user.isAdmin) {
         return await Event.findByIdAndUpdate(id, input, { new: true });
       }
-      throw new AuthenticationError('User not authorized to update events');
+      throw new AuthenticationError('Authorized user verified.');
     },
 
     deleteEvent: async (_, { id }, context) => {
