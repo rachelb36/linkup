@@ -35,6 +35,8 @@ This project leverages the following technologies:
 - **Database**: MongoDB with Mongoose ORM
 - **Authentication**: JWT for secure, token-based authentication
 
+---
+
 ## Installation
 
 ### Prerequisites
@@ -73,6 +75,8 @@ Ensure you have the following installed:
 
 Replace <your_mongodb_connection_string> and <your_secret_key> with your actual MongoDB URI and a secret key for JWT.
 
+---
+
 ## Usage
 
 Running the Application
@@ -85,10 +89,9 @@ In the root directory, run
 
 #### This command will 
 
- 
-
 ## Visit the Application:
 Open your browser and navigate to http://localhost:3000 to access the application.
+
 ### User Authentication
 Sign up as a new user or log in if you already have an account.
 Admin users can access additional controls for event creation and management.
@@ -135,7 +138,7 @@ The following scripts are available in this project:
 ## Visit the Application:
 Open your browser and navigate to http://localhost:3000 to access the application.
 ** User Authentication
-Sign up as a new user or log in if you already have an account.
+Sign up as a new user or login if you already have an account.
 Admin users can access additional controls for event creation and management.
 
 
@@ -152,18 +155,17 @@ JWT_SECRET	 || Secret key for signing JWT tokens
 The following scripts are available in this project:
 
 ### Install dependencies:
-bash
-Copy code
-npm install
-Run the development server (in root directory):
-bash
-Copy code
-npm run dev
-Run client and se
-
+`bash`
 
 `npm install`
 
+** Run the development server (in root directory):
+bash
+
+`npm run dev`
+Run client and se
+
+`npm install`
 
 ### API Reference
 The API supports the following endpoints and GraphQL queries/mutations:
@@ -211,16 +213,16 @@ deleteEvent(id: ID!): Deletes an event (admin only).
 The API supports the following endpoints and GraphQL queries/mutations:
 
 ### User Endpoints
--- : Allows users to register with their details and get a JWT token.
+Allows users to register with their details and get a JWT token.
 Login: Authenticates a user and returns a JWT token for further requests.
-### Event Endpoints
 
-### Add Event: 
+### Event Endpoints
+#### Add Event: 
 Allows admin users to add events, including details such as name, location, date, and time.
 ** Update Event: Admins can modify existing events.
 ** Delete Event: Admins can delete events.
 
-## Common Queries and Mutations
+### Common Queries and Mutations
 
 ### User Queries
 ** me: Returns details of the currently logged-in user.
@@ -261,8 +263,5 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 For further questions or suggestions:
 
-Email: rachel@pixelstreetmedia.com
-GitHub: github.com/your-username
-Feel free to reach out if you have additional questions or require specific details on implementation!
-
-This format includes professional styling, consistent formatting, and easy-to-navigate sections. Replace placeholders such as `your-username` and `your-email@example.com` with actual information. Let me know if there are any other sections you'd like to expand upon!
+**Email**: rachel@pixelstreetmedia.com
+**GitHub**: github.com/rachelb36
