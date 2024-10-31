@@ -5,8 +5,6 @@ import { ADD_EVENT } from '../utils/mutations';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const AddEvent = () => {
   const [eventData, setEventData] = useState({
@@ -24,32 +22,30 @@ const AddEvent = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEventData({ ...eventData, [name]: value });
-    toast.info(`${name.charAt(0).toUpperCase() + name.slice(1)} updated to: ${value}`);
   };
 
   const handleDateChange = (newValue) => {
     setEventData({ ...eventData, date: newValue });
-    toast.info(`Date updated to: ${newValue ? newValue.format('YYYY-MM-DD') : ''}`);
   };
 
   const handleTimeChange = (newValue) => {
     setEventData({ ...eventData, time: newValue });
-    toast.info(`Time updated to: ${newValue ? newValue.format('HH:mm') : ''}`);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const formattedEvent = {
+        ...eventData,
+        date: eventData.date ? eventData.date.toISOString().split("T")[0] : null,
+        time: eventData.time ? eventData.time.format('HH:mm') : null,
+      };
+
       await addEvent({
-        variables: {
-          input: {
-            ...eventData,
-            date: eventData.date ? eventData.date.toISOString() : null,
-            time: eventData.time ? eventData.time.format('HH:mm') : null,
-          },
-        },
+        variables: { input: formattedEvent },
       });
-      toast.success('Event added successfully!');
+
+      // Clear form on success
       setEventData({
         name: '',
         description: '',
@@ -59,9 +55,9 @@ const AddEvent = () => {
         time: null,
         image: '',
       });
+
     } catch (err) {
-      toast.error('Failed to add event');
-      console.error(err);
+      console.error('Failed to add event:', err);
     }
   };
 
@@ -78,7 +74,6 @@ const AddEvent = () => {
         mt: 5,
       }}
     >
-      <ToastContainer position="top-center" autoClose={2000} hideProgressBar />
       <Typography variant="h4" component="h1" textAlign="center">
         Add Event
       </Typography>
@@ -114,13 +109,13 @@ const AddEvent = () => {
           label="Event Date"
           value={eventData.date}
           onChange={handleDateChange}
-          slots={{ textField: TextField }}
+          renderInput={(props) => <TextField {...props} />}
         />
         <TimePicker
           label="Event Time"
           value={eventData.time}
           onChange={handleTimeChange}
-          slots={{ textField: TextField }}
+          renderInput={(props) => <TextField {...props} />}
         />
       </LocalizationProvider>
       <TextField

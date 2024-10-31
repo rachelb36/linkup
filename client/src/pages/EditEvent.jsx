@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { UPDATE_EVENT } from '../utils/mutations'; 
+import { UPDATE_EVENT } from '../utils/mutations';
 import { GET_ALL_EVENTS } from '../utils/queries';
 
 const EditEvent = ({ eventId }) => {
@@ -10,21 +10,36 @@ const EditEvent = ({ eventId }) => {
   });
 
   const [updateEvent, { error }] = useMutation(UPDATE_EVENT);
-
   const [eventData, setEventData] = useState({
     name: '',
     description: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
     date: '',
-    city: '',  
-    state: '',  
+    time: '',
     image: '',
   });
 
   useEffect(() => {
-    if (data) {
-      setEventData(data.event);
+    if (data && data.events) {
+      const eventToEdit = data.events.find(event => event.id === eventId);
+      if (eventToEdit) {
+        setEventData({
+          name: eventToEdit.name,
+          description: eventToEdit.description,
+          address: eventToEdit.address || '',
+          city: eventToEdit.city || '',
+          state: eventToEdit.state || '',
+          zip: eventToEdit.zip || '',
+          date: eventToEdit.date ? eventToEdit.date.slice(0, 10) : '',
+          time: eventToEdit.time || '',
+          image: eventToEdit.image || '',
+        });
+      }
     }
-  }, [data]);
+  }, [data, eventId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,15 +49,17 @@ const EditEvent = ({ eventId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const { __typename, id, ...filteredEventData } = eventData;
+
       await updateEvent({
         variables: {
-          id: eventId,
-          input: eventData,
+          updateEventId: eventId,
+          input: filteredEventData,
         },
       });
       alert('Event updated successfully!');
     } catch (err) {
-      console.error(err);
+      console.error('Update failed:', err);
     }
   };
 
@@ -50,7 +67,7 @@ const EditEvent = ({ eventId }) => {
 
   return (
     <Box
-      component='form'
+      component="form"
       onSubmit={handleSubmit}
       sx={{
         display: 'flex',
@@ -61,19 +78,19 @@ const EditEvent = ({ eventId }) => {
         mt: 5,
       }}
     >
-      <Typography variant='h4' component='h1' textAlign='center'>
+      <Typography variant="h4" component="h1" textAlign="center">
         Edit Event
       </Typography>
       <TextField
-        name='name'
-        label='Event Name'
+        name="name"
+        label="Event Name"
         value={eventData.name}
         onChange={handleChange}
         required
       />
-        <TextField
-        name='description'
-        label='Event Description'
+      <TextField
+        name="description"
+        label="Event Description"
         multiline
         rows={4}
         value={eventData.description}
@@ -81,32 +98,55 @@ const EditEvent = ({ eventId }) => {
         required
       />
       <TextField
-        name='date'
-        label='Event Date'
-        type='date'
+        name="address"
+        label="Address"
+        value={eventData.address}
+        onChange={handleChange}
+      />
+      <TextField
+        name="city"
+        label="City"
+        value={eventData.city}
+        onChange={handleChange}
+      />
+      <TextField
+        name="state"
+        label="State"
+        value={eventData.state}
+        onChange={handleChange}
+      />
+      <TextField
+        name="zip"
+        label="ZIP Code"
+        value={eventData.zip}
+        onChange={handleChange}
+      />
+      <TextField
+        name="date"
+        label="Event Date"
+        type="date"
         value={eventData.date}
         onChange={handleChange}
         required
       />
-
-          <TextField
-        name='time'
-        label='Event Time'
-        type='time'
+      <TextField
+        name="time"
+        label="Event Time"
+        type="time"
         value={eventData.time}
         onChange={handleChange}
         required
       />
       <TextField
-        name='image'
-        label='Upload Image'
+        name="image"
+        label="Event Photo URL"
         value={eventData.image}
         onChange={handleChange}
       />
-      <Button type='submit' variant='contained' color='primary'>
+      <Button type="submit" variant="contained" color="primary">
         Update Event
       </Button>
-      {error && <Typography color='error'>Something went wrong...</Typography>}
+      {error && <Typography color="error">Something went wrong...</Typography>}
     </Box>
   );
 };

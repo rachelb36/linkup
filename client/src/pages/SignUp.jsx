@@ -4,8 +4,6 @@ import { TextField, Button, Box, Typography } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { SIGNUP } from '../utils/mutations';
 import Auth from '../utils/auth';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import '../index.css';
 
 const SignUp = () => {
@@ -21,6 +19,7 @@ const SignUp = () => {
   });
   const [passwordError, setPasswordError] = useState('');
   const [signup, { error, data }] = useMutation(SIGNUP);
+  const [formMessage, setFormMessage] = useState('');
 
   // Handle input changes
   const handleChange = (event) => {
@@ -29,14 +28,14 @@ const SignUp = () => {
       ...formState,
       [name]: value,
     });
-    toast.info(`${name.charAt(0).toUpperCase() + name.slice(1)} updated to: ${value}`);
+    setFormMessage(`${name.charAt(0).toUpperCase() + name.slice(1)} updated`);
   };
 
   // Form submission handler
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    setPasswordError(''); // Clear any password error
+    setPasswordError('');
+    setFormMessage('');
 
     try {
       const { data } = await signup({
@@ -47,19 +46,18 @@ const SignUp = () => {
 
       if (data?.signup?.token) {
         Auth.login(data.signup.token);
-        toast.success('Signup successful!');
+        setFormMessage("Sign up successful!");
       } else {
         console.error('Token missing in mutation response');
       }
     } catch (e) {
       console.error('Error during form submission:', e);
-      toast.error('Error during form submission.');
+      setFormMessage("Error during sign up. Please try again.");
     }
   };
 
   return (
     <Box className='login-box'>
-      <ToastContainer position='top-center' autoClose={2000} hideProgressBar />
       <Typography variant='h5' align='center' mb={2}>
         Sign Up
       </Typography>
@@ -163,8 +161,19 @@ const SignUp = () => {
           </Button>
         </form>
       )}
-      {/* Display error toast if mutation error exists */}
-      {error && toast.error(error.message)}
+      <Typography align='center' mt={2}>
+        <Link to='/login'>Already a member? Login here.</Link>
+      </Typography>
+      {formMessage && (
+        <Typography color='primary' mt={2}>
+          {formMessage}
+        </Typography>
+      )}
+      {error && (
+        <Typography color='error' mt={2}>
+          {error.message}
+        </Typography>
+      )}
     </Box>
   );
 };

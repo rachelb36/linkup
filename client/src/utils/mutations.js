@@ -14,6 +14,22 @@ export const LOGIN = gql`
   }
 `;
 
+
+export const IS_ADMIN = gql`     
+  mutation Mutation($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+  token
+    user {
+      isAdmin
+      }
+    } 
+  }
+`;
+
+
+
+
+
 // Define the SIGNUP mutation
 export const SIGNUP = gql`
   mutation Signup($userInput: UserInput!) {

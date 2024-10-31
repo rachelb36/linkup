@@ -26,7 +26,7 @@ const Login = () => {
         const { token, user } = data.login;
         Auth.login(token);
         setIsLoggedIn(true);
-
+console.log(user);
         // Redirect based on user role and pass `firstName`
         if (user.isAdmin) {
           navigate('/admin', { state: { firstName: user.firstName } });
