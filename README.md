@@ -31,7 +31,8 @@
 ## Technologies
 This project leverages the following technologies:
 
-- **Front-end**: React, Apollo Client, Vite, React Router, Material - **Back-end**: Node.js, Express.js, Apollo Server
+- **Front-end**: React, Apollo Client, Vite, React Router, Material -
+- **Back-end**: Node.js, Express.js, Apollo Server
 - **Database**: MongoDB with Mongoose ORM
 - **Authentication**: JWT for secure, token-based authentication
 
