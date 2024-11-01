@@ -47,7 +47,7 @@ const typeDefs = gql`
     city: String
     state: String
     date: Date!
-    time: String!
+    time: String
     image: String
   }
 

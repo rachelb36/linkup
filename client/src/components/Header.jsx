@@ -4,16 +4,18 @@ import '../index.css';
 
 const Header = () => {
   return (
-    <Box className='header'>
-      {/* Direct reference to logo in the public folder */}
-      <img
-        className='logo'
-        src='/linkup.png'
-        alt='LinkUp logo'
-        onClick={() => (window.location.href = '/Home')}
-        style={{ height: '75px', cursor: 'pointer' }}
-      />
 
+
+
+    <Box className='header'>
+    <img
+      className='logo'
+      src='/linkup.png'
+      alt='LinkUp logo'
+      onClick={() => (window.location.href = '/')}
+      style={{ height: '75px', cursor: 'pointer' }}
+      >
+        </img>
       {/* Navbar component */}
       <Navbar />
     </Box>

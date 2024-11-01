@@ -11,10 +11,6 @@ const eventSchema = new Schema({
     type: String,
     required: true,
   },
-  address: {
-    type: String,
-    required: false,
-  },
   city: {
     type: String,
     required: false,
@@ -24,11 +20,6 @@ const eventSchema = new Schema({
     type: String,
     required: false,
     MaxLength: 2,
-  },
-  zip: {
-    type: String,
-    required: false,
-    MaxLength: 5,
   },
   date: {
     type: Date,

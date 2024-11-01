@@ -12,7 +12,8 @@ const resolvers = {
     },
 
     users: async (_, __, context) => {
-      if (context.user && context.user.isAdmin) {
+      // if (context.user && context.user.isAdmin) {
+      if (context.user) {
         return await User.find({});
       }
       throw new AuthenticationError('User not authenticated or lacks permissions');
@@ -80,14 +81,14 @@ const resolvers = {
     },
 
     addEvent: async (_, { input }, context) => {
-      if (context.user && context.user.isAdmin) {
+      if (context.user) {
         return await Event.create(input);
       }
       throw new AuthenticationError('User not authorized to create events');
     },
 
     updateEvent: async (_, { id, input }, context) => {
-      if (context.user && context.user.isAdmin) {
+      if (context.user) {
         const updateFields = {
           name: input.name,
           description: input.description,
@@ -112,7 +113,7 @@ const resolvers = {
     },
 
     deleteEvent: async (_, { id }, context) => {
-      if (context.user && context.user.isAdmin) {
+      if (context.user) {
         const event = await Event.findByIdAndDelete(id);
         return !!event;
       }

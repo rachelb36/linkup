@@ -18,8 +18,6 @@ import {
 } from '@mui/icons-material';
 import { GET_ALL_USERS } from '../utils/queries';
 // import { UPDATE_USER } from '../utils/mutations';
-import { useNavigate } from 'react-router-dom';
-
 const UserList = () => {
   const { loading, data, refetch } = useQuery(GET_ALL_USERS);
   const users = data?.users || [];

@@ -27,9 +27,6 @@ export const IS_ADMIN = gql`
 `;
 
 
-
-
-
 // Define the SIGNUP mutation
 export const SIGNUP = gql`
   mutation Signup($userInput: UserInput!) {
@@ -68,51 +65,53 @@ export const ADD_USER = gql`
 
 // Define the UPDATE_USER mutation
 export const UPDATE_USER = gql`
-  mutation Mutation($userId: ID!, $input: UserInfo!) {
-    updateUser(userId: $userId, input: $input) {
-      _id
-      email
-      isAdmin
-      firstName
-      lastName
-      city
-      state
-      phoneNumber
-      occupation
-    }
+mutation UpdateUser($userId: ID!, $input: UserInput!) {
+  updateUser(userId: $userId, input: $input) {
+    _id
+    firstName
+    lastName
+    city
+    state
+    email
+    phoneNumber
+    occupation
+    isAdmin
   }
+}
 `;
 
-// Define the ADD_EVENT mutation
+
 export const ADD_EVENT = gql`
-  mutation AddEvent($input: EventInput!) {
-    addEvent(input: $input) {
-      id
-      description
-      name
-      city
-      state
-      time
-      date
-      image
-    }
+mutation AddEvent($input: EventInput!) {
+  addEvent(input: $input) {
+    name
+    description
+    date
+    city
+    state
+    time
+    image
   }
+}
 `;
+
+
+
 
 // Define the UPDATE_EVENT mutation
 export const UPDATE_EVENT = gql`
-  mutation Mutation($updateEventId: ID!, $input: EventInput!) {
-    updateEvent(id: $updateEventId, input: $input) {
-      id
-      description
-      name
-      city
-      state
-      time
-      date
-      image
-    }
+mutation UpdateEvent($updateEventId: ID!, $input: EventInput!) {
+  updateEvent(id: $updateEventId, input: $input) {
+    id
+    name
+    description
+    date
+    time
+    city
+    state
+    image
   }
+}
 `;
 
 // Define the DELETE_EVENT mutation
