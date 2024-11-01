@@ -77,7 +77,7 @@ In the root directory, run
 
 
 ## Visit the Application:
-Open your browser and navigate to http://localhost:3000 to access the application.
+Open your browser and navigate to <https://linkup-48zt.onrender.com> to access the application.
 ** User Authentication
 Sign up as a new user or login if you already have an account.
 Admin users can access additional controls for event creation and management.
