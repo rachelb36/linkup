@@ -11,6 +11,7 @@
 - [Scripts](#scripts)
 - [API Reference](#api-reference)
 - [Error Handling](#error-handling)
+- [Credits](#credits)
 - [License](#license)
 - [Contact](#contact)
 
@@ -82,8 +83,12 @@ Sign up as a new user or login if you already have an account.
 Admin users can access additional controls for event creation and management.
 
 ![LINKUP](public/images/linkup_1.png)
+
 ![LINKUP](public/images/linkup_2.png)
 
+![LINKUP](public/images/linkup_3.png)
+
+![LINKUP](public/images/linkup_5.png)
 
 
 
@@ -159,6 +164,10 @@ In the auth.js file, unauthorized access is managed by AuthenticationError using
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
+## Credits
+## Credits
+
+\*\* This project was accomplished with the help provided by the instructors and TAs of the Rice University Coding Bootcamp, including Instructor Darian Mendez, Mateo Wallace, Mark Alfano, Gerard Mennella
 
 ## Contact
 

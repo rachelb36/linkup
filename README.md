@@ -80,6 +80,8 @@ Replace <your_mongodb_connection_string> and <your_secret_key> with your actual 
 
 ## Usage
 
+![LINKUP Screen 1](/public/images/linkup_1.png)
+
 Running the Application
 Start the development server:
 In the root directory, run
