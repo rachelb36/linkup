@@ -40,7 +40,8 @@ This project leverages the following technologies:
 
 ## Installation
 To view on Render, go to:
-<
+<https://linkup-1-8077.onrender.com>
+<https://linkup-5oc1.onrender.com>
 
 ### Prerequisites
 
