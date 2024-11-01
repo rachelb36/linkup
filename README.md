@@ -80,7 +80,13 @@ Replace <your_mongodb_connection_string> and <your_secret_key> with your actual 
 
 ## Usage
 
-![LINKUP Screen 1](/public/images/linkup_1.png)
+![LINKUP Screen 1](public/images/linkup_1.png)
+
+![LINKUP SCREEN 2](public/images/linkup_2.png)
+
+![LINKUP SCREEN 2](public/images/linkup_2.png)
+
+![LINKUP SCREEN 2](public/images/linkup_2.png)
 
 Running the Application
 Start the development server:
