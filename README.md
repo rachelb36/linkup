@@ -39,6 +39,8 @@ This project leverages the following technologies:
 ---
 
 ## Installation
+To view on Render, go to:
+<
 
 ### Prerequisites
 
@@ -51,7 +53,7 @@ Ensure you have the following installed:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/linkup-final.git
+    git clone <htt>ps://github.com/rachelb36/linkup>
     cd linkup-final
     ```
 
@@ -80,13 +82,13 @@ Replace <your_mongodb_connection_string> and <your_secret_key> with your actual 
 
 ## Usage
 
-![LINKUP Screen 1](public/images/linkup_1.png)
+![LINKUP Home Screen](client/public/images/linkup_1.png)
 
-![LINKUP SCREEN 2](public/images/linkup_2.png)
+![Events Page](client/public/images/linkup_2.png)
 
-![LINKUP SCREEN 3](public/images/linkup_3.png)
+![Admin Page](client/public/images/linkup_3.png)
 
-![LINKUP SCREEN 5](public/images/linkup_5.png)
+![LINKUP SCREEN 5](client/public/images/linkup_5.png)
 
 Running the Application
 Start the development server:
