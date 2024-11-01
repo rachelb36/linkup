@@ -17,7 +17,6 @@
 ---
 
 ## Overview
-
 **LinkUp Final Project** is a full-stack web application built to facilitate user account management, event planning, and more. Users can register, log in, and engage with various functionalities based on their roles and permissions.
 
 ## Features
@@ -38,9 +37,6 @@ This project leverages the following technologies:
 ---
 
 ## Installation
-
-### Prerequisites
-
 Ensure you have the following installed:
 
 - Node.js (v14 or later)
@@ -65,16 +61,6 @@ Ensure you have the following installed:
     npm install
     ```
 
-3. **Environment Configuration**:
-   Create a `.env` file in the `server` directory and add the following variables:
-
-   ```env
-   PORT=3001
-   MONGODB_URI=<your_mongodb_connection_string>
-   JWT_SECRET=<your_secret_key>
-
-Replace <your_mongodb_connection_string> and <your_secret_key> with your actual MongoDB URI and a secret key for JWT.
-
 ---
 
 ## Usage
@@ -87,52 +73,6 @@ In the root directory, run
     --IN the root directory, run:
     `npm run dev`
 
-#### This command will 
-
-## Visit the Application:
-Open your browser and navigate to http://localhost:3000 to access the application.
-
-### User Authentication
-Sign up as a new user or log in if you already have an account.
-Admin users can access additional controls for event creation and management.
-
-### Environment Variables
-Make sure to configure the following environment variables in your .env file:
-
-Variable	Description
-PORT	The port number for the server
-MONGODB_URI	MongoDB connection string
-JWT_SECRET	Secret key for signing JWT tokens
-Scripts
-
-The following scripts are available in this project:
-
-** Install dependencies:
-`bash`
-
-`npm install`
-
-** Run the development server (in root directory):
-`bash`
-
-`npm run dev`
-
-** Run client and server individually:
-`bash`
-
-
-
-## Running the Application
-** Start the development server:
-
-** In the root directory, run:
-
-`bash`
-
-`npm run dev`
-
-
--- This command will concurrently start the server and client. The front-end will run on http://localhost:3000 and the back-end on http://localhost:3001.
 
 
 ## Visit the Application:
@@ -140,6 +80,13 @@ Open your browser and navigate to http://localhost:3000 to access the applicatio
 ** User Authentication
 Sign up as a new user or login if you already have an account.
 Admin users can access additional controls for event creation and management.
+
+![LINKUP](public/images/linkup_1.png)
+![LINKUP](public/images/linkup_2.png)
+
+
+
+
 
 
 ### Environment Variables
@@ -154,18 +101,6 @@ JWT_SECRET	 || Secret key for signing JWT tokens
 ## Scripts
 The following scripts are available in this project:
 
-### Install dependencies:
-`bash`
-
-`npm install`
-
-** Run the development server (in root directory):
-bash
-
-`npm run dev`
-Run client and se
-
-`npm install`
 
 ### API Reference
 The API supports the following endpoints and GraphQL queries/mutations:
@@ -209,40 +144,6 @@ addEvent(input: EventInput!): Adds a new event (admin only).
 updateEvent(id: ID!, input: EventInput!): Updates an existing event (admin only).
 deleteEvent(id: ID!): Deletes an event (admin only).
 
-## API Reference
-The API supports the following endpoints and GraphQL queries/mutations:
-
-### User Endpoints
-Allows users to register with their details and get a JWT token.
-Login: Authenticates a user and returns a JWT token for further requests.
-
-### Event Endpoints
-#### Add Event: 
-Allows admin users to add events, including details such as name, location, date, and time.
-** Update Event: Admins can modify existing events.
-** Delete Event: Admins can delete events.
-
-### Common Queries and Mutations
-
-### User Queries
-** me: Returns details of the currently logged-in user.
-** users: Returns a list of all users (admin-only access).
-
-### Event Queries
-** events: Retrieves a list of all events.
-event(id: ID!): Retrieves the details of a specific event by ID.
-
-
-### User Mutations
-signup(userInput: UserInput): Registers a new user.
-login(email: String!, password: String!): Logs in a user and returns a JWT token.
-Event Mutations
-
-addEvent(input: EventInput!): Adds a new event (admin only).
-updateEvent(id: ID!, input: EventInput!): Updates an existing event (admin only).
-
-deleteEvent(id: ID!): Deletes an event (admin only).
-Error Handling
 
 The application uses ErrorPage for handling unexpected issues in the client and custom GraphQL error handling in the back-end, with detailed error logging in the console.
 
