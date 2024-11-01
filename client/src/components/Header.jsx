@@ -5,8 +5,6 @@ import '../index.css';
 const Header = () => {
   return (
 
-
-
     <Box className='header'>
     <img
       className='logo'
