@@ -17,7 +17,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { GET_ALL_EVENTS } from '../utils/queries';
+import { GET_ALL_EVENTS, GET_ME } from '../utils/queries';
 import { ADD_TO_USER_LIKES } from '../utils/mutations';
 import './events.css';
 
@@ -28,6 +28,12 @@ const Events = () => {
   const [addToUserLikes] = useMutation(ADD_TO_USER_LIKES);
   const [favorites, setFavorites] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { loading: userLoading, data: userData } = useQuery(GET_ME, {
+    onCompleted: (data) => {
+      setFavorites(data?.me?.likedEvents || []);
+    }
+  });
 
   const handleAddToUserLikes = async (eventId) => {
     try {
@@ -51,7 +57,7 @@ const Events = () => {
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
 
-  if (loading) return <p>Loading events...</p>;
+  if (loading || userLoading) return <p>Loading events...</p>;
 
   const events = data?.events || [];
 

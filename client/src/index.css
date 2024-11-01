@@ -1,3 +1,10 @@
+
+
+
+.Button {
+  background-color: #0d1e30;
+  color: white;
+}
 body {
   margin: 0px;
   padding: 0px;
@@ -11,6 +18,69 @@ body {
 }
 #root {
 }
+.darkblue {
+  color: #1d3857;
+}
+
+
+.salmon {
+  color: salmon;
+} 
+
+h1 {
+
+  color: #1d3857;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+  font-style: normal;
+  font-weight: bold;
+}
+
+h2 {
+  color: #1d3857;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  font-style: normal;
+  font-weight: bold;
+}   
+
+h3 {
+  color: #1d3857;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  font-style: normal;
+  font-weight: bold;
+}
+
+h4 {
+  color: #1d3857;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  font-style: normal;
+  font-weight: bold;
+  margin-top: 100px;
+}
+
+h5 {
+  color: #1d3857;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  font-style: normal;
+}
+
+
+h6 {
+  color: #1d3857;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+  font-style: normal;
+}
 
 .header {
   position: absolute;
@@ -20,6 +90,17 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+.dkblue_button {
+  background-color: #0d1e30;
+  color: white;
+}
+
+
+/* .button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+  background-color: #1d3857;
+  color: white;
+} */
 
 .logo {
   margin-left: 0px;
@@ -56,6 +137,28 @@ body {
 .login-box h2 {
   color: '#f57369';
 }
+
+.header MUiBox-root css-0 {
+  display: flex;
+  justify-content: space-between;
+  color: #1d3857;
+}
+
+.mainh3 {
+  color: #1d3857;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  font-style: normal;
+  line-height: 29px;
+}
+
+
+
+
+
+
 
 /* .login-box {
   background-color: rgba(255, 255, 255, 0.8);

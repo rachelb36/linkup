@@ -8,15 +8,18 @@ import dayjs from 'dayjs';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import '../index.css';
 
-const EditEvent = ({ eventId }) => {
+const EditEvent = ({ eventId, handleEditModalClose }) => {
   const { loading, data } = useQuery(GET_ALL_EVENTS, {
     variables: { id: eventId },
   });
 
   const [updateEvent, { error: updateError }] = useMutation(UPDATE_EVENT);
   const [deleteEvent, { error: deleteError }] = useMutation(DELETE_EVENT, {
+    refetchQueries: [{ query: GET_ALL_EVENTS }],
     onCompleted: () => {
+      handleEditModalClose()
       toast.success('Event deleted successfully!');
     },
     onError: () => {
@@ -89,7 +92,7 @@ const EditEvent = ({ eventId }) => {
     if (window.confirm('Are you sure you want to delete this event?')) {
       try {
         await deleteEvent({
-          variables: { deleteEventId: eventId },
+          variables: { id: eventId },
         });
       } catch (err) {
         console.error('Delete failed:', err);
@@ -163,7 +166,7 @@ const EditEvent = ({ eventId }) => {
         value={eventData.image}
         onChange={handleChange}
       />
-      <Button type="submit" variant="contained" color="primary">
+      <Button type="submit" variant="contained" color="#0d1e30">
         Update Event
       </Button>
       <Button
@@ -173,9 +176,9 @@ const EditEvent = ({ eventId }) => {
       >
         Delete Event
       </Button>
-      {(updateError || deleteError) && (
-        <Typography color="error">Something went wrong...</Typography>
-      )}
+      {/* {(updateError || deleteError) && (
+        <Typography className="salmon">Something went wrong...</Typography>
+      )} */}
     </Box>
   );
 };

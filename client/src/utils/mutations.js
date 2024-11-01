@@ -141,16 +141,7 @@ export const ADD_USER_TO_EVENT = gql`
 export const ADD_TO_USER_LIKES = gql`
   mutation AddToUserLikes($eventId: ID!) {
     addToUserLikes(eventId: $eventId) {
-      id
-      description
-      name
-      city
-      state
-      address
-      zip
-      time
-      date
-      image
+      _id
     }
   }
 `;

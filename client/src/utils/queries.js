@@ -29,6 +29,7 @@ export const GET_ME = gql`
       state
       phoneNumber
       occupation
+      likedEvents
     }
   }
 `;

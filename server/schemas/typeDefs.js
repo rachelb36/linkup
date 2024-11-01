@@ -14,6 +14,7 @@ const typeDefs = gql`
     email: String!
     occupation: String!
     isAdmin: Boolean!
+    likedEvents: [ID]
   }
 
   # Define UserInput for user-related mutations

@@ -5,6 +5,7 @@ import AddEvent from './AddEvent';
 import EditEvent from './EditEvent';
 import { useLocation } from 'react-router-dom';
 import Auth from '../utils/auth';
+import '../index.css';
 import {
   Card,
   CardContent,
@@ -20,6 +21,7 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
+import '../index.css';
 
 const AdminPage = () => {
   // Query to fetch all events
@@ -66,14 +68,15 @@ const AdminPage = () => {
 
   return (
     <Container>
-      <Box display="flex" justifyContent="flex-end" gap={2} mt={4} mb={4}>
-        <Typography variant="h4">
-          Hello {firstName}, welcome to the Admin Page!
+      <Box display="flex" justifyContent="center" gap={2} mt={4} mb={4}>
+        <Typography variant='h4'>
+          Hi {firstName}, welcome to the Admin Page!
         </Typography>
-        <Button variant="contained" color="primary" onClick={handleAddEventModalOpen}>
+        <Button variant="contained" className="dkblue_button" onClick={handleAddEventModalOpen}>
+       
           Add Event
         </Button>
-        <Button variant="contained" color="secondary" onClick={handleUsersModalOpen}>
+        <Button variant="contained" className="dkblue_button" onClick={handleUsersModalOpen}>
           View Users
         </Button>
       </Box>
@@ -127,7 +130,7 @@ const AdminPage = () => {
           }}
         >
           <AddEvent onClose={handleAddEventModalClose} refetchEvents={refetch} />
-          <Button onClick={handleAddEventModalClose} variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <Button color="#ff7961" onClick={handleAddEventModalClose} variant="contained" className="salmon" fullWidth sx={{ mt: 2 }}>
             Close
           </Button>
         </Box>
@@ -148,8 +151,8 @@ const AdminPage = () => {
             borderRadius: 2,
           }}
         >
-          <EditEvent eventId={selectedEventId} onSave={handleSaveChanges} />
-          <Button onClick={handleEditModalClose} variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <EditEvent eventId={selectedEventId} onSave={handleSaveChanges} handleEditModalClose={handleEditModalClose} />
+          <Button onClick={handleEditModalClose} variant="contained" className="darkblue" fullWidth sx={{ mt: 2 }}>
             Close
           </Button>
         </Box>
