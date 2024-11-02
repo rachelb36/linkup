@@ -51,7 +51,8 @@ const resolvers = {
     },
 
     addUser: async (_, { user }, context) => {
-      if (context.user && context.user.isAdmin) {
+      // if (context.user && context.user.isAdmin) {
+      if (context.user) {
         return await User.create(user);
       }
       throw new AuthenticationError('User not authenticated');

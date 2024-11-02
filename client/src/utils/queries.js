@@ -11,7 +11,7 @@ export const GET_ALL_USERS = gql`
       lastName
       city
       state
-      phoneNumber
+      photo
       occupation
     }
   }
@@ -27,8 +27,8 @@ export const GET_ME = gql`
       lastName
       city
       state
-      phoneNumber
       occupation
+      photo
       likedEvents
     }
   }

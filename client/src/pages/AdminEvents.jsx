@@ -59,7 +59,7 @@ const AdminEvents = () => {
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 2 }}>Admin Events</Typography>
+      <Typography variant="h4" sx={{ mb: 2 }}>Admin Page</Typography>
 
       <Button variant="contained" color="primary" onClick={handleOpenAddModal}>
         Add Event

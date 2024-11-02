@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import { TextField, Button, Box, Typography, Tooltip, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { ADD_EVENT } from '../utils/mutations';
 import { GET_ALL_EVENTS } from '../utils/queries';
 import { toast } from 'react-toastify';
@@ -10,7 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
-const AddEvent = () => {
+const AddEvent = ({ onClose }) => {  // Add `onClose` prop for the close button if needed
   const [eventData, setEventData] = useState({
     name: '',
     description: '',
@@ -91,9 +92,18 @@ const AddEvent = () => {
         mt: 5,
       }}
     >
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '0px'}}>
+        <Tooltip title="Close">
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+      
       <Typography variant="h4" component="h1" textAlign="center">
         Add Event
       </Typography>
+      
       <TextField
         name="name"
         label="Event Name"
@@ -101,6 +111,7 @@ const AddEvent = () => {
         onChange={handleChange}
         required
       />
+      
       <TextField
         name="description"
         label="Event Description"
@@ -110,18 +121,21 @@ const AddEvent = () => {
         onChange={handleChange}
         required
       />
+      
       <TextField
         name="city"
         label="City"
         value={eventData.city}
         onChange={handleChange}
       />
+      
       <TextField
         name="state"
         label="State"
         value={eventData.state}
         onChange={handleChange}
       />
+      
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Event Date"
@@ -136,20 +150,24 @@ const AddEvent = () => {
           slotProps={{ textField: { fullWidth: true } }}
         />
       </LocalizationProvider>
+      
       <TextField
         name="image"
         label="Event Photo URL"
         value={eventData.image}
         onChange={handleChange}
       />
+      
       <Button type="submit" variant="contained" color="primary">
         Add Event
       </Button>
+      
       {error && <Typography color="error">Something went wrong...</Typography>}
     </Box>
   );
 };
 
 export default AddEvent;
+
 
 

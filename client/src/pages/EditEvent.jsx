@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { TextField, Button, Box, Typography } from '@mui/material';
-import { UPDATE_EVENT, DELETE_EVENT } from '../utils/mutations'; 
+import { TextField, Box, Typography, IconButton, Tooltip, Alert } from '@mui/material';
+import { UPDATE_EVENT, DELETE_EVENT } from '../utils/mutations';
 import { GET_ALL_EVENTS } from '../utils/queries';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -15,16 +18,21 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
     variables: { id: eventId },
   });
 
-  const [updateEvent, { error: updateError }] = useMutation(UPDATE_EVENT);
-  const [deleteEvent, { error: deleteError }] = useMutation(DELETE_EVENT, {
+  const [updateEvent] = useMutation(UPDATE_EVENT, {
     refetchQueries: [{ query: GET_ALL_EVENTS }],
     onCompleted: () => {
-      handleEditModalClose()
-      toast.success('Event deleted successfully!');
+      setShowSaveAlert(true); // Show success alert on save
     },
-    onError: () => {
-      toast.error('Failed to delete event.');
-    }
+    onError: () => toast.error('Failed to update event.')
+  });
+
+  const [deleteEvent] = useMutation(DELETE_EVENT, {
+    refetchQueries: [{ query: GET_ALL_EVENTS }],
+    onCompleted: () => {
+      toast.success('Event deleted successfully!');
+      handleEditModalClose(); // Close modal after deletion
+    },
+    onError: () => toast.error('Failed to delete event.')
   });
 
   const [eventData, setEventData] = useState({
@@ -36,6 +44,8 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
     time: null,
     image: '',
   });
+
+  const [showSaveAlert, setShowSaveAlert] = useState(false); // State for showing save success alert
 
   useEffect(() => {
     if (data && data.events) {
@@ -69,8 +79,9 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setShowSaveAlert(false); // Hide previous alert if any
+    const { id, ...filteredEventData } = eventData;
     try {
-      const { __typename, id, ...filteredEventData } = eventData;
       await updateEvent({
         variables: {
           updateEventId: eventId,
@@ -81,10 +92,8 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
           },
         },
       });
-      toast.success('Event updated successfully!');
     } catch (err) {
       console.error('Update failed:', err);
-      toast.error('Failed to update event.');
     }
   };
 
@@ -109,15 +118,29 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 3,
+        gap: 2,
         maxWidth: '600px',
         margin: 'auto',
-        mt: 5,
       }}
     >
-      <Typography variant="h4" component="h1" textAlign="center">
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', pt: 1 }}>
+        <Tooltip title="Close">
+          <IconButton onClick={handleEditModalClose}>
+            <CloseIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+
+      <Typography variant="h5" textAlign="center">
         Edit Event
       </Typography>
+
+      {showSaveAlert && (
+        <Alert severity="success" onClose={() => setShowSaveAlert(false)}>
+          Event saved successfully!
+        </Alert>
+      )}
+
       <TextField
         name="name"
         label="Event Name"
@@ -129,7 +152,7 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
         name="description"
         label="Event Description"
         multiline
-        rows={4}
+        rows={3}
         value={eventData.description}
         onChange={handleChange}
         required
@@ -146,6 +169,7 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
         value={eventData.state}
         onChange={handleChange}
       />
+
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           label="Event Date"
@@ -160,31 +184,28 @@ const EditEvent = ({ eventId, handleEditModalClose }) => {
           slotProps={{ textField: { fullWidth: true } }}
         />
       </LocalizationProvider>
+
       <TextField
         name="image"
         label="Event Photo URL"
         value={eventData.image}
         onChange={handleChange}
       />
-      <Button type="submit" variant="contained" color="#0d1e30">
-        Update Event
-      </Button>
-      <Button
-        onClick={handleDelete}
-        variant="contained"
-        sx={{ backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: 'darkred' } }}
-      >
-        Delete Event
-      </Button>
-      {/* {(updateError || deleteError) && (
-        <Typography className="salmon">Something went wrong...</Typography>
-      )} */}
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+        <Tooltip title="Save">
+          <IconButton type="submit">
+            <SaveIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton onClick={handleDelete}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
     </Box>
   );
 };
 
 export default EditEvent;
-
-
-
-

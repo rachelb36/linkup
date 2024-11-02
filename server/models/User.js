@@ -13,10 +13,6 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  address: {
-    type: String,
-    required: false,
-  },
   city: {
     type: String,
     required: false,
@@ -25,16 +21,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
     maxlength: 2,
-  },
-  zip: {
-    type: String,
-    required: false,
-    maxlength: 5,
-  },
-
-  phoneNumber: {
-    type: String,
-    required: true,
   },
   email: {
     type: String,

@@ -39,7 +39,6 @@ export const SIGNUP = gql`
         lastName
         city
         state
-        phoneNumber
         occupation
       }
     }
@@ -57,7 +56,7 @@ export const ADD_USER = gql`
       lastName
       city
       state
-      phoneNumber
+      photo
       occupation
     }
   }
@@ -73,9 +72,9 @@ mutation UpdateUser($userId: ID!, $input: UserInput!) {
     city
     state
     email
-    phoneNumber
     occupation
     isAdmin
+    photo
   }
 }
 `;
@@ -130,8 +129,6 @@ export const ADD_USER_TO_EVENT = gql`
       name
       city
       state
-      time
-      date
       image
     }
   }

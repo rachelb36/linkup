@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { GET_ALL_EVENTS, GET_ALL_USERS } from '../utils/queries';
 import AddEvent from './AddEvent';
 import EditEvent from './EditEvent';
 import { useLocation } from 'react-router-dom';
 import Auth from '../utils/auth';
-import '../index.css';
 import {
   Card,
   CardContent,
@@ -17,30 +16,24 @@ import {
   Box,
   Container,
   Modal,
-  List,
-  ListItem,
-  ListItemText,
 } from '@mui/material';
-import '../index.css';
+import MemberList from './MemberList';
 
 const AdminPage = () => {
-  // Query to fetch all events
+  // Fetch events data
   const { loading, error, data, refetch } = useQuery(GET_ALL_EVENTS);
-  const location = useLocation();
-  const firstName = location.state?.firstName;
 
-  // Query to fetch all users with authorization headers
+  // Fetch users data with auth context
   const {
     loading: usersLoading,
     data: usersData,
     error: usersError,
   } = useQuery(GET_ALL_USERS, {
-    context: {
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
-      },
-    },
+    context: { headers: { Authorization: `Bearer ${Auth.getToken()}` } },
   });
+
+  const location = useLocation();
+  const firstName = location.state?.firstName;
 
   const [isUsersModalOpen, setIsUsersModalOpen] = useState(false);
   const [isAddEventModalOpen, setIsAddEventModalOpen] = useState(false);
@@ -53,32 +46,32 @@ const AdminPage = () => {
   };
 
   const handleSaveChanges = () => {
-    refetch(); // Refetch events after saving
+    refetch();
     setIsEditModalOpen(false);
   };
 
   if (loading) return <p>Loading events...</p>;
   if (error) return <p>Error loading events: {error.message}</p>;
 
-  const handleUsersModalOpen = () => setIsUsersModalOpen(true);
-  const handleUsersModalClose = () => setIsUsersModalOpen(false);
-  const handleAddEventModalOpen = () => setIsAddEventModalOpen(true);
-  const handleAddEventModalClose = () => setIsAddEventModalOpen(false);
-  const handleEditModalClose = () => setIsEditModalOpen(false);
-
   return (
     <Container>
-      <Box display="flex" justifyContent="center" gap={2} mt={4} mb={4}>
-        <Typography variant='h4'>
+      <Box display="flex" justifyContent="space-between" gap={2} mt={4} mb={4}>
+        <Typography variant="h5" fontStyle="normal">
           Hi {firstName}, welcome to the Admin Page!
         </Typography>
-        <Button variant="contained" className="dkblue_button" onClick={handleAddEventModalOpen}>
-       
-          Add Event
-        </Button>
-        <Button variant="contained" className="dkblue_button" onClick={handleUsersModalOpen}>
-          View Users
-        </Button>
+        <Box>
+          <Button variant="contained" color="primary" onClick={() => setIsAddEventModalOpen(true)}>
+            Add Event
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ ml: 2 }}
+            color="secondary"
+            onClick={() => setIsUsersModalOpen(true)}
+          >
+            View Members
+          </Button>
+        </Box>
       </Box>
 
       <Grid container spacing={4} justifyContent="center">
@@ -100,12 +93,7 @@ const AdminPage = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button
-                  size="small"
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => handleEditClick(event.id)}
-                >
+                <Button size="small" color="primary" variant="outlined" onClick={() => handleEditClick(event.id)}>
                   Edit
                 </Button>
               </CardActions>
@@ -115,7 +103,7 @@ const AdminPage = () => {
       </Grid>
 
       {/* Add Event Modal */}
-      <Modal open={isAddEventModalOpen} onClose={handleAddEventModalClose}>
+      <Modal open={isAddEventModalOpen} onClose={() => setIsAddEventModalOpen(false)}>
         <Box
           sx={{
             position: 'absolute',
@@ -129,15 +117,12 @@ const AdminPage = () => {
             borderRadius: 2,
           }}
         >
-          <AddEvent onClose={handleAddEventModalClose} refetchEvents={refetch} />
-          <Button color="#ff7961" onClick={handleAddEventModalClose} variant="contained" className="salmon" fullWidth sx={{ mt: 2 }}>
-            Close
-          </Button>
+          <AddEvent onClose={() => setIsAddEventModalOpen(false)} refetchEvents={refetch} />
         </Box>
       </Modal>
 
       {/* Edit Event Modal */}
-      <Modal open={isEditModalOpen} onClose={handleEditModalClose}>
+      <Modal open={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
         <Box
           sx={{
             position: 'absolute',
@@ -151,49 +136,27 @@ const AdminPage = () => {
             borderRadius: 2,
           }}
         >
-          <EditEvent eventId={selectedEventId} onSave={handleSaveChanges} handleEditModalClose={handleEditModalClose} />
-          <Button onClick={handleEditModalClose} variant="contained" className="darkblue" fullWidth sx={{ mt: 2 }}>
-            Close
-          </Button>
+          <EditEvent eventId={selectedEventId} onSave={handleSaveChanges} />
         </Box>
       </Modal>
 
       {/* Users Modal */}
-      <Modal open={isUsersModalOpen} onClose={handleUsersModalClose}>
+      <Modal open={isUsersModalOpen} onClose={() => setIsUsersModalOpen(false)}>
         <Box
           sx={{
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: 500,
+            width: 350,
             bgcolor: 'background.paper',
             boxShadow: 24,
             p: 4,
             borderRadius: 2,
           }}
         >
-          <Typography variant="h6" gutterBottom>
-            Registered Users
-          </Typography>
-          {usersLoading ? (
-            <Typography>Loading users...</Typography>
-          ) : usersError ? (
-            <Typography color="error">Error loading users: {usersError.message}</Typography>
-          ) : (
-            <List>
-              {usersData?.users &&
-                usersData.users.map((user) => (
-                  <ListItem key={user._id}>
-                    <ListItemText
-                      primary={`${user.firstName} ${user.lastName}`}
-                      secondary={`Email: ${user.email} | Occupation: ${user.occupation}`}
-                    />
-                  </ListItem>
-                ))}
-            </List>
-          )}
-          <Button onClick={handleUsersModalClose} variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <MemberList usersLoading={usersLoading} usersError={usersError} usersData={usersData} />
+          <Button onClick={() => setIsUsersModalOpen(false)} variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
             Close
           </Button>
         </Box>
@@ -203,5 +166,3 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
-
-

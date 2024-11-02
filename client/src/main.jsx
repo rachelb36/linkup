@@ -9,18 +9,18 @@ import Events from './pages/Events';
 import AddEvent from './pages/AddEvent';
 import EditEvent from './pages/EditEvent';
 import AdminPage from './pages/AdminPage';
+import MemberList from './pages/MemberList';
 import './index.css';
 
 // Create a BrowserRouter instance
-
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />, // App component will wrap all other pages
-    errorElement: <ErrorPage />, // Default error page
+    element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        index: true,  
+        path: '',  // Define an explicit path for the homepage
         element: <Home />,
       },
       {
@@ -40,11 +40,15 @@ const router = createBrowserRouter([
         element: <Events />,
       },
       {
+        path: 'users', // Assuming 'MemberList' is the intended user listing page
+        element: <MemberList />,
+      },
+      {
         path: 'signup',
         element: <SignUp />,
       },
       {
-        path: '*', // Catch-all route for undefined paths
+        path: '*',
         element: <ErrorPage />,
       },
     ],
@@ -55,5 +59,3 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 );
-
-export default router;

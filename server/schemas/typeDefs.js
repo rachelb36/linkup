@@ -10,9 +10,9 @@ const typeDefs = gql`
     lastName: String!
     city: String!
     state: String!
-    phoneNumber: String!
     email: String!
     occupation: String!
+    photo: String
     isAdmin: Boolean!
     likedEvents: [ID]
   }
@@ -23,9 +23,9 @@ const typeDefs = gql`
     lastName: String!
     city: String
     state: String
-    phoneNumber: String
     email: String!
     occupation: String
+    photo: String
     password: String!
   }
 

@@ -12,14 +12,13 @@ const SignUp = () => {
     lastName: '',
     city: '',
     state: '',
-    phoneNumber: '',
     occupation: '',
     email: '',
     password: '',
+    // confirmPassword: '',
   });
   const [passwordError, setPasswordError] = useState('');
   const [signup, { error, data }] = useMutation(SIGNUP);
-  const [formMessage, setFormMessage] = useState('');
 
   // Handle input changes
   const handleChange = (event) => {
@@ -28,14 +27,18 @@ const SignUp = () => {
       ...formState,
       [name]: value,
     });
-    setFormMessage(`${name.charAt(0).toUpperCase() + name.slice(1)} updated`);
   };
 
   // Form submission handler
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    setPasswordError('');
-    setFormMessage('');
+
+    // if (formState.password !== formState.confirmPassword) {
+    //   setPasswordError('Passwords do not match.');
+    //   return;
+    // }
+
+    setPasswordError(''); // Clear password error if passwords match
 
     try {
       const { data } = await signup({
@@ -46,13 +49,11 @@ const SignUp = () => {
 
       if (data?.signup?.token) {
         Auth.login(data.signup.token);
-        setFormMessage("Sign up successful!");
       } else {
         console.error('Token missing in mutation response');
       }
     } catch (e) {
       console.error('Error during form submission:', e);
-      setFormMessage("Error during sign up. Please try again.");
     }
   };
 
@@ -87,6 +88,7 @@ const SignUp = () => {
             margin='normal'
             required
           />
+         
           <TextField
             label='City'
             name='city'
@@ -105,16 +107,7 @@ const SignUp = () => {
             fullWidth
             margin='normal'
           />
-          <TextField
-            label='Phone Number'
-            name='phoneNumber'
-            type='text'
-            value={formState.phoneNumber}
-            onChange={handleChange}
-            fullWidth
-            margin='normal'
-            required
-          />
+        
           <TextField
             label='Occupation'
             name='occupation'
@@ -145,6 +138,16 @@ const SignUp = () => {
             margin='normal'
             required
           />
+          {/* <TextField
+            label='Confirm Password'
+            name='confirmPassword'
+            type='password'
+            value={formState.confirmPassword}
+            onChange={handleChange}
+            fullWidth
+            margin='normal'
+            required
+          /> */}
           {passwordError && (
             <Typography color='error' mt={1}>
               {passwordError}
@@ -160,14 +163,6 @@ const SignUp = () => {
             Submit
           </Button>
         </form>
-      )}
-      <Typography align='center' mt={2}>
-        <Link to='/login'>Already a member? Login here.</Link>
-      </Typography>
-      {formMessage && (
-        <Typography color='primary' mt={2}>
-          {formMessage}
-        </Typography>
       )}
       {error && (
         <Typography color='error' mt={2}>
