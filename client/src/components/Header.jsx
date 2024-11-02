@@ -8,7 +8,7 @@ const Header = () => {
     <Box className='header'>
     <img
       className='logo'
-      src='public/images/linkup.png'
+      src='../public/images/linkup.png'
       alt='LinkUp logo'
       onClick={() => (window.location.href = '/')}
       style={{ height: '75px', cursor: 'pointer' }}
