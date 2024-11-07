@@ -78,7 +78,7 @@ In the root directory, run
 
 ## Visit the Application:
 Open your browser and navigate to 
-<https://linkup-48zt.onrender.com>
+**<https://linkup-5oc1.onrender.com/>**
 
 Register for an account as a regular user or use jen@email.com /password.
 
