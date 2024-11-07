@@ -45,12 +45,16 @@ const Events = () => {
       setFavorites(updatedFavorites);
 
       if (!isFavorited) {
-        await addToUserLikes({
+        const response = await addToUserLikes({
           variables: { eventId },
         });
+        console.log('Add to user likes response:', response);
+      } else {
+        console.log(`Event with id ${eventId} already in favorites.`);
       }
     } catch (err) {
-      console.error('Error adding event to user likes:', err);
+      console.error('Error adding event to user likes:', err.message || err);
+      alert('An error occurred while adding the event to favorites. Please try again.');
     }
   };
 
@@ -76,38 +80,58 @@ const Events = () => {
         Show Favorites
       </Button>
       <Grid container spacing={4} justifyContent="center">
-        {events.map((event) => (
-          <Grid item xs={12} sm={6} md={4} key={event.id}>
-            <Card sx={{ maxWidth: 345, mx: 'auto', position: 'relative' }}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={event.image || '/placeholder-image.jpg'} // Placeholder if no image provided
-                alt={event.name}
-              />
-              <CardContent>
-                <Typography variant="h5">{event.name}</Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {event.date}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {event.description}
-                </Typography>
-              </CardContent>
-              <Box position="absolute" bottom={10} right={10}>
-                <IconButton
-                  aria-label="add to likes"
-                  onClick={() => handleAddToUserLikes(event.id)}
-                  color="error"
-                >
-                  <FavoriteIcon 
-                    sx={{ color: favorites.includes(event.id) ? 'red' : 'gray' }} 
-                  />
-                </IconButton>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
+        {events.map((event) => {
+          // Format date and time only if they exist
+          const formattedDate = event.date
+            ? new Date(event.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })
+            : 'Date not available';
+          const formattedTime = event.time
+            ? new Date(`1970-01-01T${event.time}`).toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+              })
+            : 'Time not available';
+
+          return (
+            <Grid item xs={12} sm={6} md={4} key={event.id}>
+              <Card sx={{ maxWidth: 345, mx: 'auto', position: 'relative' }}>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={event.image || '/placeholder-image.jpg'} // Placeholder if no image provided
+                  alt={event.name}
+                />
+                <CardContent>
+                  <Typography variant="h5">{event.name}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {event.description}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                    {formattedDate} • {formattedTime}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {event.city}, {event.state}
+                  </Typography>
+                </CardContent>
+                <Box position="absolute" bottom={10} right={10}>
+                  <IconButton
+                    aria-label="add to likes"
+                    onClick={() => handleAddToUserLikes(event.id)}
+                    color="error"
+                  >
+                    <FavoriteIcon 
+                      sx={{ color: favorites.includes(event.id) ? 'red' : 'gray' }} 
+                    />
+                  </IconButton>
+                </Box>
+              </Card>
+            </Grid>
+          );
+        })}
       </Grid>
 
       {/* Modal for showing favorited events */}
@@ -130,22 +154,38 @@ const Events = () => {
           <List>
             {events
               .filter((event) => favorites.includes(event.id))
-              .map((event) => (
-                <ListItem key={event.id}>
-                  <ListItemText
-                    primary={event.name}
-                    secondary={event.date}
-                  />
-                  <IconButton
-                    edge="end"
-                    aria-label="unfavorite"
-                    onClick={() => handleAddToUserLikes(event.id)}
-                    color="error"
-                  >
-                    <FavoriteIcon />
-                  </IconButton>
-                </ListItem>
-              ))}
+              .map((event) => {
+                const formattedDate = event.date
+                  ? new Date(event.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })
+                  : 'Date not available';
+                const formattedTime = event.time
+                  ? new Date(`1970-01-01T${event.time}`).toLocaleTimeString('en-US', {
+                      hour: 'numeric',
+                      minute: '2-digit',
+                    })
+                  : 'Time not available';
+
+                return (
+                  <ListItem key={event.id}>
+                    <ListItemText
+                      primary={event.name}
+                      secondary={`${formattedDate} • ${formattedTime}`}
+                    />
+                    <IconButton
+                      edge="end"
+                      aria-label="unfavorite"
+                      onClick={() => handleAddToUserLikes(event.id)}
+                      color="error"
+                    >
+                      <FavoriteIcon />
+                    </IconButton>
+                  </ListItem>
+                );
+              })}
           </List>
           <Button onClick={handleModalClose} variant="contained" color="primary" fullWidth>
             Close

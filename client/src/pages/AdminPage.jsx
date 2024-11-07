@@ -20,15 +20,8 @@ import {
 import MemberList from './MemberList';
 
 const AdminPage = () => {
-  // Fetch events data
   const { loading, error, data, refetch } = useQuery(GET_ALL_EVENTS);
-
-  // Fetch users data with auth context
-  const {
-    loading: usersLoading,
-    data: usersData,
-    error: usersError,
-  } = useQuery(GET_ALL_USERS, {
+  const { loading: usersLoading, data: usersData, error: usersError } = useQuery(GET_ALL_USERS, {
     context: { headers: { Authorization: `Bearer ${Auth.getToken()}` } },
   });
 
@@ -40,14 +33,21 @@ const AdminPage = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
 
+  // Function to open the edit modal
   const handleEditClick = (eventId) => {
     setSelectedEventId(eventId);
     setIsEditModalOpen(true);
   };
 
+  // Function to close the edit modal
+  const handleEditModalClose = () => {
+    setIsEditModalOpen(false);
+  };
+
+  // Function to save changes and refresh the event list
   const handleSaveChanges = () => {
     refetch();
-    setIsEditModalOpen(false);
+    handleEditModalClose();
   };
 
   if (loading) return <p>Loading events...</p>;
@@ -75,31 +75,49 @@ const AdminPage = () => {
       </Box>
 
       <Grid container spacing={4} justifyContent="center">
-        {data.events.map((event) => (
-          <Grid item xs={12} sm={6} md={4} key={event.id}>
-            <Card sx={{ maxWidth: 345, mx: 'auto' }}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={event.image || '/placeholder-image.jpg'}
-                alt={event.name}
-              />
-              <CardContent>
-                <Typography variant="h6" component="div">
-                  {event.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {event.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small" color="primary" variant="outlined" onClick={() => handleEditClick(event.id)}>
-                  Edit
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+        {data.events.map((event) => {
+          const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
+          const formattedTime = new Date(`1970-01-01T${event.time}`).toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+          });
+
+          return (
+            <Grid item xs={12} sm={6} md={4} key={event.id}>
+              <Card sx={{ maxWidth: 345, mx: 'auto' }}>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={event.image || '/placeholder-image.jpg'}
+                  alt={event.name}
+                />
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    {event.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {event.description}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                    {formattedDate} • {formattedTime}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {event.city}, {event.state}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" color="primary" variant="outlined" onClick={() => handleEditClick(event.id)}>
+                    Edit
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          );
+        })}
       </Grid>
 
       {/* Add Event Modal */}
@@ -122,7 +140,7 @@ const AdminPage = () => {
       </Modal>
 
       {/* Edit Event Modal */}
-      <Modal open={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
+      <Modal open={isEditModalOpen} onClose={handleEditModalClose}>
         <Box
           sx={{
             position: 'absolute',
@@ -136,7 +154,7 @@ const AdminPage = () => {
             borderRadius: 2,
           }}
         >
-          <EditEvent eventId={selectedEventId} onSave={handleSaveChanges} />
+          <EditEvent eventId={selectedEventId} handleEditModalClose={handleEditModalClose} />
         </Box>
       </Modal>
 
