@@ -12,6 +12,7 @@
 - [API Reference](#api-reference)
 - [Error Handling](#error-handling)
 - [License](#license)
+- [Credits](#credits)
 - [Contact](#contact)
 
 ---
@@ -267,6 +268,9 @@ In the auth.js file, unauthorized access is managed by AuthenticationError using
 The application uses ErrorPage for handling unexpected issues in the client and custom GraphQL error handling in the back-end, with detailed error logging in the console.
 
 In the auth.js file, unauthorized access is managed by AuthenticationError using custom JWT validation. Any invalid tokens result in an appropriate error message.
+
+## Credits
+\*\* This project was accomplished with the help provided by the incredible instructors and TAs of the Rice University Coding Bootcamp, including Instructor Darian Mendez, Mateo Wallace, Mark Alfano, Gerard Mennella
 
 ## License
 
