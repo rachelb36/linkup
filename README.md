@@ -44,7 +44,9 @@ To view on Render, go to:
 
 <https://linkup-5oc1.onrender.com>
 
-Admin Login: email: test@email.com / password: password
+## ADMIN LOGIN: 
+email: test@email.com 
+password: password
 
 ### Prerequisites
 
